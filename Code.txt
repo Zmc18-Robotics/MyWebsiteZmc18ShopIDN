@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zmc Shop IDN</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: #fff;
+      border: 1px solid #000;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    header {
+      background-color: #000000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .menu {
+      display: none;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu-icon {
+      cursor: pointer;
+      width: 30px;
+      height: 30px;
+      background: url('menu-icon.png') no-repeat;
+      background-size: cover;
+    }
+
+    h1 {
+      color: orange;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+    }
+
+    .search-bar input[type="text"] {
+      padding: 5px;
+      margin-right: 10px;
+    }
+
+    .search-bar button {
+      background-color: orange;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .sidebar {
+      background-color: #666;
+      width: 200px;
+      padding: 20px;
+      border-right: 1px solid #313131;
+      height: 100%;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      margin-bottom: 10px;
+      color: orange;
+      cursor: pointer;
+    }
+
+    .content {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+    }
+
+    .product-container {
+      width: 70%;
+      background-color: #fff;
+      border: 1px solid #000;
+      border-radius: 5px;
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .product-box {
+      width: calc(45% - 20px);
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #eee;
+      border: 3px solid #000;
+      border-radius: 5px;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .product-box img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .product-box h3,
+    .product-box p {
+      color: orange;
+      margin: 0;
+    }
+
+    footer {
+      background-color: #040404;
+      padding: 10px 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .vertical-line {
+      border-left: 1px solid #ccc;
+      height: 100%;
+      margin-left: 20px;
+    }
+
+    /* Portfolio styles - IMPROVED */
+    .portfolio-container {
+      width: 100%;
+      padding: 30px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f0f0f0;
+      border-bottom: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .portfolio-info {
+      width: 50%;
+      padding-right: 30px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .portfolio-info.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .portfolio-info h2 {
+      color: #333;
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .portfolio-info p {
+      color: #666;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .portfolio-photo {
+      width: 40%;
+      height: 300px;
+      background-color: #ddd;
+      border: 3px solid #000;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      margin-left: auto;
+      margin-right: 0;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .portfolio-photo.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .portfolio-photo img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-button {
+      background-color: orange;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .nav-button:hover {
+      background-color: #ff8c00;
+    }
+
+    /* Animation classes */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeOutDown {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+    }
+
+    @keyframes fadeOutRight {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+    }
+
+    /* Shop Content Animation */
+    #shop-content {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    #shop-content.fade-in {
+      animation: fadeInUp 1s forwards;
+    }
+
+    #shop-content.fade-out {
+      animation: fadeOutDown 1s forwards;
+    }
+
+    /* Portfolio Section Animation */
+    #portfolio-section {
+      opacity: 1; /* Changed from 0 to 1 */
+      transition: opacity 0.5s ease;
+    }
+
+    #portfolio-section.fade-in {
+      opacity: 1;
+    }
+
+    #portfolio-section.fade-out {
+      opacity: 0;
+    }
+
+        /* Social Media Buttons */
+    .social-icons {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      gap: 10px;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      background-color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .social-icon:hover {
+      transform: scale(1.2);
+    }
+
+    /* Payment Methods */
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .payment-method {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 120px;
+    }
+
+    .payment-method img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      background-color: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
+    }
+
+    .payment-method p {
+      margin: 0;
+      text-align: center;
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* Theme Toggle Switch */
+    .theme-toggle {
+      background-color: #f0f0f0;
+      border-radius: 30px;
+      padding: 5px;
+      width: 60px;
+      height: 30px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+      margin: 20px auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .toggle-ball {
+      width: 24px;
+      height: 24px;
+      background-color: #fff;
+      position: absolute;
+      border-radius: 50%;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      left: 3px;
+    }
+
+    .toggle-ball.dark {
+      transform: translateX(30px);
+      background-color: #333;
+    }
+
+    /* Dark theme colors */
+    body.dark-theme {
+      background-color: #222;
+      color: #eee;
+    }
+
+    .dark-theme .container {
+      background-color: #333;
+      border-color: #555;
+    }
+
+    .dark-theme .product-box {
+      background-color: #444;
+      border-color: #555;
+    }
+
+    .dark-theme .portfolio-container {
+      background-color: #222;
+    }
+
+    .dark-theme .portfolio-info h2 {
+      color: #fff;
+    }
+
+    .dark-theme .portfolio-info p {
+      color: #ccc;
+    }
+
+    .dark-theme .payment-methods {
+      background-color: #444;
+    }
+
+    .dark-theme .sidebar {
+      background-color: #444;
+    }
+
+    /* Fade animations for menu items */
+    .fade-in-element {
+      animation: fadeInElement 0.5s forwards;
+    }
+
+    .fade-out-element {
+      animation: fadeOutElement 0.5s forwards;
+    }
+
+    @keyframes fadeInElement {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeOutElement {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <span class="menu-icon"></span>
+        <ul class="menu">
+          <li>Lihat Saldo</li>
+          <li>Akun</li>
+          <li>Log In</li>
+          <li>Log Out</li>
+        </ul>
+      </div>
+      <h1>Zmc Shop IDN</h1>
+      <div class="nav-buttons">
+        <button id="portfolio-btn" class="nav-button">Portfolio</button>
+        <button id="shop-btn" class="nav-button">Shop</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Cari...">
+        <button>Cari</button>
+      </div>
+    </header>
+
+    <!-- Portfolio Section -->
+    <div id="portfolio-section" class="portfolio-container">
+      <div class="portfolio-info">
+        <h2>Muhammad Zidane Akbari</h2>
+        <p>Saya adalah seorang Programmer yang bekerja dibagian Robotik</p>
+        <p>Spesialisasi dalam Pengembangan Web, Robotika, Embedded Systems, IoT, Animasi, Seni Murni, dan Seni digital. Dengan pengalaman yang saya miliki, saya telah mengerjakan berbagai macam proyek dari pembuatan website hingga sistem robotika canggih.</p>
+        <p>Silahkan lihat layanan yang saya tawarkan melalui tombol "Shop" di atas.</p>
+      </div>
+      <div class="portfolio-photo">
+        <img src="profile-photo.jpeg" alt="Zmc Profile Photo" onerror="this.src='https://via.placeholder.com/400x300?text=Foto+Profil+Zmc'">
+        <div class="social-icons">
+          <a href="https://www.youtube.com/channel/UCz0OJuK-72fhbMQ8xXfywcQ" target="_blank" class="social-icon">
+            <img src="YT.png" alt="YouTube">
+          </a>
+          <a href="https://l.instagram.com/?u=https%3A%2F%2Finstagram.com%2Fmc.zminecrafter_18%3Figshid%3DMzNlNGNkZWQ4Mg%253D%253D&e=AT2kX_c9_O7sSqYEs2zmKjQUCEXxyueGLEKFLV9RL9jFYiA6WnGlvtlXmAsfZxhXIA1Vsb-dHct27UUvviG3P3_S78d09WQKttVKX0rVE3I9ZEM3xEFrBrYNEIM" target="_blank" class="social-icon">
+            <img src="IG.png" alt="Instagram">
+          </a>
+          <a href="https://wa.me/089510809179" target="_blank" class="social-icon">
+            <img src="WA.png" alt="WhatsApp">
+          </a>
+          <a href="https://github.com/Zmc18-Robotics?tab=repositories" target="_blank" class="social-icon">
+            <img src="GH.png" alt="GitHub">
+          </a>
+          <a href="https://discord.com/channels/1353313549631492218/1353313549631492221" target="_blank" class="social-icon">
+            <img src="DC.png" alt="Discord">
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shop Content -->
+    <div id="shop-content" style="display: none;">
+      <div class="content">
+        <div class="sidebar">
+          <ul>
+              <li id="lihat-produk">Lihat Produk</li>
+              <li id="produk-laris">Produk Terlaris</li>
+              <li id="pembelian">Pembelian</li>
+              <li id="payment-methods-btn">Metode Pembayaran</li>
+              <li id="settings-btn">Setelan</li>
+          </ul>
+      </div>
+        <div class="vertical-line"></div>
+        <div class="product-container">
+          <!-- Product boxes will be dynamically added here using JavaScript -->
+        </div>
+      </div>
+    </div>
+    <div id="settings-content" style="display: none;" class="content">
+      <div class="sidebar">
+        <ul>
+          <li id="back-to-shop">Kembali</li>
+        </ul>
+      </div>
+      <div class="vertical-line"></div>
+      <div class="product-container">
+        <h2>Pengaturan</h2>
+        <div>
+          <h3>Tema:</h3>
+          <div class="theme-toggle">
+            <div class="toggle-ball"></div>
+          </div>
+          <p id="theme-text">Mode Terang</p>
+        </div>
+      </div>
+    </div>
+    <div id="payment-content" style="display: none;" class="content">
+      <div class="sidebar">
+        <ul>
+          <li id="back-to-shop-from-payment">Kembali</li>
+        </ul>
+      </div>
+      <div class="vertical-line"></div>
+      <div class="product-container">
+        <h2>Metode Pembayaran</h2>
+        <p>Anda bisa membayar menggunakan metode-metode pembayaran berikut ini:</p>
+        <div class="payment-methods">
+          <div class="payment-method">
+            <img src="Dana.png" alt="Dana">
+            <p>Dana</p>
+          </div>
+          <div class="payment-method">
+            <img src="SP.png" alt="ShopeePay">
+            <p>ShopeePay</p>
+          </div>
+          <div class="payment-method">
+            <img src="Qris.png" alt="QRIS">
+            <p>QRIS</p>
+          </div>
+          <div class="payment-method">
+            <img src="Bank.png" alt="Transfer Bank">
+            <p>Transfer Bank</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <p>By Zmc</p>
+      <p>Dilarang mengklaim situs web ini, jika mengklaim maka anda dinyatakan melanggar Undang-Undang Nomor 28 Tahun 2014, dan penjara minimal 2 tahun</p>
+    </footer>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const productContainer = document.querySelector('.product-container');
+      const sidebar = document.querySelector('.sidebar');
+      const content = document.querySelector('.content');
+      const header = document.querySelector('header');
+      const portfolioSection = document.getElementById('portfolio-section');
+      const shopContent = document.getElementById('shop-content');
+      const portfolioBtn = document.getElementById('portfolio-btn');
+      const shopBtn = document.getElementById('shop-btn');
+      const portfolioInfo = document.querySelector('.portfolio-info');
+      const portfolioPhoto = document.querySelector('.portfolio-photo');
+      const settingsContent = document.getElementById('settings-content');
+      const paymentContent = document.getElementById('payment-content');
+      const backToShopBtn = document.getElementById('back-to-shop');
+      const backToShopFromPaymentBtn = document.getElementById('back-to-shop-from-payment');
+      const themeToggle = document.querySelector('.theme-toggle');
+      const toggleBall = document.querySelector('.toggle-ball');
+      const themeText = document.getElementById('theme-text');
+  
+      // Sample product data
+      const products = [
+        { image: 'product13.jpeg', name: 'Jasa membuat Robot', price: 'Rp. 250.000 - Rp. X ( tergantung kesulitan )', author: 'By Zmc' },
+        { image: 'product14.jpeg', name: 'Jasa Koding Embedded IoT', price: 'Rp. 75.000 - Rp. X ( tergantung kesulitan )', author: 'By Zmc' },
+        { image: 'product15.jpeg', name: 'Sensor Anti Maling', price: 'Rp. 300.000. R̶p̶ 3̶3̶5̶0̶0̶0̶', author: 'By Zmc' },
+        { image: 'product3.jpeg', name: 'Jasa Gambar Anime Digital', price: 'Rp. 350.000. R̶p̶ 4̶0̶0̶0̶0̶0̶', author: 'By Zmc' },
+        { image: 'product1.jpg', name: 'Jasa Sketsa gambar', price: 'Rp. 20.000', author: 'By Zmc' },
+        { image: 'product2.jpg', name: 'Jasa Gambar Anime Tradisional No Color', price: 'Rp. 18.000', author: 'By Zmc' },
+        { image: 'product4.jpg', name: 'Jasa Renderan 16:9 ( Full Body )', price: 'Rp. 45.000 ( + Rp.5000 jika menambah karakter )', author: 'By Zmc' },
+        { image: 'project5.jpg', name: 'Jasa Renderan 1:1 ( Full Body )', price: 'Rp. 32.000 ( + Rp.5000 jika menambah karakter )', author: 'By Zmc' },
+        { image: 'product7.png', name: 'Jasa Renderan 1:1 ( Half Body )', price: 'Rp. 25.000 ( + Rp.3000 jika menambah karakter )', author: 'By Zmc' },
+        { image: 'product8.png', name: 'Jasa Membuat Animasi ( Mineimator Only )', price: 'Rp. 8.000 per detik', author: 'By Zmc' },
+        { image: 'product10.png', name: 'Jasa Pembuatan Rig / Model 3D', price: 'Rp. 50.000 - Rp. X ( tergantung kesulitan )', author: 'By Zmc' },
+        { image: 'product11.png', name: 'Jasa Membuat website', price: 'Rp. 50.000 - Rp. X ( tergantung kesulitan )', author: 'By Zmc' },
+        { image: 'product12.jpg', name: 'Jasa membuat kerajinan kain flanel', price: 'Rp. 12.000 - Rp. X ( tergantung kesulitan )', author: 'By Zmc' },
+      ];
+  
+      const bestSellingProducts = [
+        { image: 'product13.jpeg', name: 'Jasa membuat Robot', price: 'Rp. 250.000 - Rp. X ( tergantung kesulitan )', author: 'By Zmc' },
+        { image: 'product3.jpeg', name: 'Jasa Gambar Anime Digital', price: 'Rp. 75.000', author: 'By Zmc' },
+      ];
+  
+      // Theme Toggle Functionality
+      let isDarkTheme = false;
+      
+      themeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('dark-theme');
+        toggleBall.classList.toggle('dark');
+        isDarkTheme = !isDarkTheme;
+        themeText.textContent = isDarkTheme ? 'Mode Gelap' : 'Mode Terang';
+        
+        // Animation for toggle
+        toggleBall.style.transition = 'transform 0.3s ease, background-color 0.3s ease';
+        document.body.style.transition = 'background-color 0.5s ease';
+        document.querySelectorAll('.container, .product-box, .portfolio-container').forEach(el => {
+          el.style.transition = 'background-color 0.5s ease, border-color 0.5s ease';
+        });
+      });
+  
+      // Helper function to handle content transitions
+      function showContent(showElement, hideElements) {
+        // First hide all other elements with fade out
+        hideElements.forEach(el => {
+          if (el && el.style.display !== 'none') {
+            el.classList.add('fade-out-element');
+            setTimeout(() => {
+              el.style.display = 'none';
+              el.classList.remove('fade-out-element');
+            }, 500);
+          }
+        });
+        
+        // Then show the target element with fade in
+        setTimeout(() => {
+          if (showElement) {
+            showElement.style.display = showElement === portfolioSection ? 'flex' : 'block';
+            showElement.classList.add('fade-in-element');
+            
+            if (showElement === portfolioSection) {
+              setTimeout(() => {
+                portfolioInfo.classList.add('active');
+                setTimeout(() => {
+                  portfolioPhoto.classList.add('active');
+                }, 300);
+              }, 300);
+            }
+            
+            if (showElement === shopContent) {
+              displayProducts();
+            }
+          }
+        }, 500);
+      }
+  
+      // Toggle between Portfolio and Shop sections with animations
+      function showPortfolio() {
+        portfolioInfo.classList.remove('active');
+        portfolioPhoto.classList.remove('active');
+        showContent(portfolioSection, [shopContent, settingsContent, paymentContent]);
+      }
+  
+      function showShop() {
+        portfolioInfo.classList.remove('active');
+        portfolioPhoto.classList.remove('active');
+        showContent(shopContent, [portfolioSection, settingsContent, paymentContent]);
+      }
+  
+      function showSettings() {
+        showContent(settingsContent, [shopContent, portfolioSection, paymentContent]);
+      }
+  
+      function showPaymentMethods() {
+        showContent(paymentContent, [shopContent, portfolioSection, settingsContent]);
+      }
+  
+      // Function to display best-selling products
+      function displayBestSellingProducts() {
+        showElement(productContainer);
+        productContainer.innerHTML = ''; // Clear product container
+        bestSellingProducts.forEach(product => {
+          const productBox = document.createElement('div');
+          productBox.classList.add('product-box', 'fade-in-element');
+  
+          const productImage = document.createElement('img');
+          productImage.src = product.image;
+          productImage.alt = product.name;
+          productImage.onerror = function() {
+            this.src = 'https://via.placeholder.com/150x150?text=' + product.name;
+          };
+  
+          const productName = document.createElement('h3');
+          productName.textContent = product.name;
+  
+          const productPrice = document.createElement('p');
+          productPrice.textContent = product.price;
+  
+          const productAuthor = document.createElement('p');
+          productAuthor.textContent = product.author;
+  
+          productBox.appendChild(productImage);
+          productBox.appendChild(productName);
+          productBox.appendChild(productPrice);
+          productBox.appendChild(productAuthor);
+  
+          productContainer.appendChild(productBox);
+        });
+      }
+  
+      // Helper function to show an element with animation
+      function showElement(element) {
+        element.style.display = 'flex';
+        element.classList.add('fade-in-element');
+        setTimeout(() => {
+          element.classList.remove('fade-in-element');
+        }, 500);
+      }
+  
+      // Function to display products
+      function displayProducts() {
+        productContainer.innerHTML = ''; // Clear product container
+        showElement(productContainer);
+        
+        // Add all products
+        addProducts();
+      }
+      
+      //Informasi tombol Pembelian
+        function displayPurchaseInfo() {
+          productContainer.innerHTML = ''; // Clear product container
+          
+          // Create purchase info section
+          const purchaseInfo = document.createElement('div');
+          purchaseInfo.classList.add('purchase-info');
+          
+          purchaseInfo.innerHTML = `
+              <h2>Informasi Pembelian</h2>
+              <p>Untuk pembelian anda bisa hubungi 0895-1080-9179</p>
+              <a href="https://wa.me/+6289510809179" class="whatsapp-button" target="_blank" style="background-color: #25D366; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; transition: background-color 0.3s;">
+                  Chat via WhatsApp
+              </a>
+          `;
+          
+          productContainer.appendChild(purchaseInfo);
+      }
+  
+          // Function to display purchase info
+      function displayPurchaseInfo() {
+        productContainer.innerHTML = ''; // Clear product container
+        
+        // Create purchase info section
+        const purchaseInfo = document.createElement('div');
+        purchaseInfo.classList.add('purchase-info');
+        
+        purchaseInfo.innerHTML = `
+            <h2>Informasi Pembelian</h2>
+            <p>Untuk pembelian anda bisa hubungi 0895-1080-9179</p>
+            <a href="https://wa.me/+6289510809179" class="whatsapp-button" target="_blank" style="background-color: #25D366; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; transition: background-color 0.3s;">
+                Chat via WhatsApp
+            </a>
+        `;
+        
+        productContainer.appendChild(purchaseInfo);
+      }
+      // Add products to the product container
+      function addProducts() {
+        products.forEach(product => {
+          const productBox = document.createElement('div');
+          productBox.classList.add('product-box', 'fade-in-element');
+  
+          const productImage = document.createElement('img');
+          productImage.src = product.image;
+          productImage.alt = product.name;
+          productImage.onerror = function() {
+            this.src = 'https://via.placeholder.com/150x150?text=' + product.name;
+          };
+  
+          const productName = document.createElement('h3');
+          productName.textContent = product.name;
+  
+          const productPrice = document.createElement('p');
+          productPrice.textContent = product.price;
+  
+          const productAuthor = document.createElement('p');
+          productAuthor.textContent = product.author;
+  
+          productBox.appendChild(productImage);
+          productBox.appendChild(productName);
+          productBox.appendChild(productPrice);
+          productBox.appendChild(productAuthor);
+  
+          productContainer.appendChild(productBox);
+        });
+      }
+  
+      // Add event listeners for navigation buttons
+      portfolioBtn.addEventListener('click', showPortfolio);
+      shopBtn.addEventListener('click', showShop);
+      backToShopBtn.addEventListener('click', showShop);
+      backToShopFromPaymentBtn.addEventListener('click', showShop);
+
+      // Add event listeners for sidebar menu items
+      document.getElementById('lihat-produk').addEventListener('click', displayProducts); // Pastikan ini ada
+      document.getElementById('produk-laris').addEventListener('click', displayBestSellingProducts);
+      document.getElementById('pembelian').addEventListener('click', displayPurchaseInfo);
+      document.getElementById('payment-methods-btn').addEventListener('click', showPaymentMethods);
+      document.getElementById('settings-btn').addEventListener('click', showSettings);
+  
+      // Find the Settings menu item and add event listener
+      const menuItems = document.querySelectorAll('.sidebar ul li');
+      menuItems.forEach(item => {
+        if (item.textContent === 'Setelan') {
+          item.addEventListener('click', showSettings);
+        }
+        if (item.textContent === 'Metode Pembayaran') {
+          item.addEventListener('click', showPaymentMethods);
+        }
+      });
+  
+      // Initial display - show portfolio by default
+      window.addEventListener('load', function() {
+        // Make sure portfolio section is visible on load
+        portfolioSection.style.display = 'flex';
+        
+        // Trigger animations immediately after a short delay
+        setTimeout(() => {
+          portfolioInfo.classList.add('active');
+          
+          setTimeout(() => {
+            portfolioPhoto.classList.add('active');
+          }, 300);
+        }, 300);
+      });
+    });
+  </script>

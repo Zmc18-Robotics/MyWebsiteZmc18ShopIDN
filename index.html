@@ -751,13 +751,74 @@
         }, 500);
       }
   
-      // Function to display products
+      // Add event listener for the search button
+      document.querySelector('.search-bar button').addEventListener('click', filterProducts);
+      document.querySelector('.search-bar input[type="text"]').addEventListener('keyup', function(event) {
+          if (event.key === 'Enter') {
+              filterProducts();
+          }
+      });
+
+      function filterProducts() {
+          const searchTerm = document.querySelector('.search-bar input[type="text"]').value.toLowerCase();
+          const allProductBoxes = productContainer.querySelectorAll('.product-box');
+          let found = false;
+
+          allProductBoxes.forEach(box => {
+              const productName = box.querySelector('h3').textContent.toLowerCase();
+              if (productName.includes(searchTerm)) {
+                  box.style.display = 'block'; // Show the product box
+                  found = true;
+              } else {
+                  box.style.display = 'none'; // Hide the product box
+              }
+          });
+
+          if (!found && searchTerm !== '') {
+              productContainer.innerHTML = '<p>Produk tidak ditemukan.</p>';
+          } else if (searchTerm === '' && allProductBoxes.length === 0) {
+              // If search bar is empty and no products are displayed, re-display all products
+              displayProducts();
+          } else if (searchTerm === '' && allProductBoxes.length > 0) {
+              // If search bar is empty and products are already displayed, ensure all are shown
+              allProductBoxes.forEach(box => {
+                  box.style.display = 'block';
+              });
+          }
+      }
+
+      // Modify displayProducts to also show the products if the search bar is empty
       function displayProducts() {
-        productContainer.innerHTML = ''; // Clear product container
-        showElement(productContainer);
-        
-        // Add all products
-        addProducts();
+          productContainer.innerHTML = ''; // Clear product container
+          showElement(productContainer);
+
+          products.forEach(product => {
+              const productBox = document.createElement('div');
+              productBox.classList.add('product-box', 'fade-in-element');
+
+              const productImage = document.createElement('img');
+              productImage.src = product.image;
+              productImage.alt = product.name;
+              productImage.onerror = function() {
+                  this.src = 'https://via.placeholder.com/150x150?text=' + product.name;
+              };
+
+              const productName = document.createElement('h3');
+              productName.textContent = product.name;
+
+              const productPrice = document.createElement('p');
+              productPrice.textContent = product.price;
+
+              const productAuthor = document.createElement('p');
+              productAuthor.textContent = product.author;
+
+              productBox.appendChild(productImage);
+              productBox.appendChild(productName);
+              productBox.appendChild(productPrice);
+              productBox.appendChild(productAuthor);
+
+              productContainer.appendChild(productBox);
+          });
       }
       
       //Informasi tombol Pembelian

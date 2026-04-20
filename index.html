@@ -1,931 +1,914 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zmc Shop IDN</title>
+  <title>Zmc18 Shop IDN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f2f2f2;
+    :root {
+      --bg: #111111;
+      --bg2: #1a1a1a;
+      --card: #1e1e1e;
+      --border: rgba(255,255,255,0.08);
+      --accent: #f5a623;
+      --accent2: #ff6b35;
+      --text: #f0f0f0;
+      --text-dim: #888;
+      --green: #25D366;
+      --shadow-glow: 0 0 40px rgba(0,0,0,0.9);
     }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-    .container {
-      display: flex;
-      flex-direction: column;
-      max-width: 1200px;
-      margin: 0 auto;
-      background-color: #fff;
-      border: 1px solid #000;
-      border-radius: 5px;
-      overflow: hidden;
-    }
-
+    /* ===== HEADER ===== */
     header {
-      background-color: #000000;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 20px;
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,10,10,0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .header-logo {
+      font-family: 'Bebas Neue', sans-serif; font-size: 24px;
+      color: var(--accent); letter-spacing: 2px; cursor: pointer; user-select: none; flex-shrink:0;
+    }
+    .header-logo span { color: #fff; }
+    .header-search {
+      flex: 1; max-width: 440px; position: relative;
+    }
+    .header-search input {
+      width: 100%; background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border); border-radius: 30px;
+      padding: 8px 18px 8px 40px; color: var(--text);
+      font-family: 'Outfit', sans-serif; font-size: 14px; outline: none;
+      transition: border 0.3s, background 0.3s;
+    }
+    .header-search input:focus { border-color: var(--accent); background: rgba(245,166,35,0.07); }
+    .header-search input::placeholder { color: var(--text-dim); }
+    .search-ic { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--text-dim); font-size: 15px; }
+    .icon-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(255,255,255,0.07); border: 1px solid var(--border);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 17px; color: var(--text); transition: background 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+    .icon-btn:hover { background: rgba(245,166,35,0.15); transform: scale(1.1); }
+    .header-nav { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+    .nav-btn {
+      background: transparent; border: 1px solid var(--border); color: var(--text);
+      padding: 7px 16px; border-radius: 20px; cursor: pointer;
+      font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 500;
+      transition: background 0.2s, border-color 0.2s, color 0.2s; white-space: nowrap;
+    }
+    .nav-btn:hover, .nav-btn.active { background: var(--accent); border-color: var(--accent); color: #000; }
+    .wa-btn {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--green); color: #fff; border-radius: 22px;
+      padding: 7px 14px; font-size: 13px; font-weight: 700;
+      text-decoration: none; flex-shrink: 0;
+      animation: waPulse 4s ease-in-out infinite;
+    }
+    .wa-btn img { width: 20px; height: 20px; }
+    @keyframes waPulse {
+      0%,68%,100% { transform: scale(1); }
+      72% { transform: scale(1.12); }
+      76% { transform: scale(1.12) rotate(-5deg); }
+      80% { transform: scale(1.12) rotate(5deg); }
+      84% { transform: scale(1.12) rotate(-2deg); }
+      88% { transform: scale(1.04); }
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-    }
+    /* ===== SECTIONS ===== */
+    .section { display: none; }
+    .section.active { display: block; }
 
-    .menu {
-      display: none;
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    /* ===== PORTFOLIO ===== */
+    #portfolio-section { min-height: calc(100vh - 60px); }
+    .portfolio-hero {
+      background: linear-gradient(135deg, #0c0c0c 0%, #181818 50%, #0c0c0c 100%);
+      position: relative; overflow: hidden; padding: 80px 60px;
     }
-
-    .menu-icon {
-      cursor: pointer;
-      width: 30px;
-      height: 30px;
-      background: url('menu-icon.png') no-repeat;
-      background-size: cover;
+    .portfolio-hero::after {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 28px 28px; pointer-events: none;
     }
-
-    h1 {
-      color: orange;
+    .portfolio-hero::before {
+      content: ''; position: absolute; top: -40%; right: -15%;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(245,166,35,0.07) 0%, transparent 65%);
+      pointer-events: none;
     }
-
-    .search-bar {
-      display: flex;
-      align-items: center;
+    .portfolio-inner {
+      max-width: 1100px; margin: 0 auto; display: flex;
+      align-items: center; justify-content: space-between;
+      gap: 60px; position: relative; z-index: 1;
     }
-
-    .search-bar input[type="text"] {
-      padding: 5px;
-      margin-right: 10px;
+    .portfolio-text { flex: 1; animation: fadeUp 0.8s ease both; }
+    .portfolio-text h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(38px, 5vw, 62px); color: var(--text);
+      line-height: 1; margin-bottom: 8px;
     }
-
-    .search-bar button {
-      background-color: orange;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      cursor: pointer;
+    .title-tag {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: #000; font-size: 12px; font-weight: 700;
+      padding: 4px 14px; border-radius: 20px; margin-bottom: 22px; letter-spacing: 1px;
     }
-
-    .sidebar {
-      background-color: #666;
-      width: 200px;
-      padding: 20px;
-      border-right: 1px solid #313131;
-      height: 100%;
+    .portfolio-text p { color: var(--text-dim); font-size: 14px; line-height: 1.8; margin-bottom: 10px; }
+    .social-row { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+    .social-pill {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: 30px; padding: 7px 14px; text-decoration: none;
+      color: var(--text); font-size: 13px; font-weight: 500;
+      transition: transform 0.25s, background 0.25s;
     }
-
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
+    .social-pill:hover { transform: scale(1.1); background: rgba(245,166,35,0.1); }
+    .social-pill img { width: 18px; height: 18px; object-fit: contain; }
+    .portfolio-card-wrap { flex-shrink: 0; animation: fadeRight 0.8s 0.2s ease both; }
+    .profile-card {
+      width: 240px; background: var(--card);
+      border: 1px solid var(--border); border-radius: 18px;
+      overflow: hidden; position: relative;
+      box-shadow: var(--shadow-glow), 0 0 60px rgba(0,0,0,0.85);
     }
-
-    .sidebar li {
-      margin-bottom: 10px;
-      color: orange;
-      cursor: pointer;
+    .profile-card::before {
+      content: ''; position: absolute; inset: -1px; border-radius: 18px;
+      background: linear-gradient(135deg, rgba(245,166,35,0.25), transparent 55%);
+      pointer-events: none; z-index: 0;
     }
+    .profile-img { width: 100%; height: 210px; object-fit: cover; display: block; position: relative; z-index: 1; }
+    .profile-card-info { padding: 14px 16px; position: relative; z-index: 1; }
+    .profile-card-info h3 { font-size: 14px; font-weight: 700; color: var(--text); }
+    .profile-card-info p { font-size: 11px; color: var(--text-dim); margin-top: 3px; }
 
-    .content {
-      flex: 1;
-      padding: 20px;
-      display: flex;
+    /* ===== SHOP ===== */
+    #shop-section { max-width: 1300px; margin: 0 auto; padding: 36px 24px; }
+    .shop-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: 50px;
+      color: var(--text); letter-spacing: 3px; text-align: center; margin-bottom: 36px;
     }
-
-    .product-container {
-      width: 70%;
-      background-color: #fff;
-      border: 1px solid #000;
-      border-radius: 5px;
-      padding: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 22px;
     }
+    .no-results { text-align: center; color: var(--text-dim); padding: 60px 0; font-size: 16px; }
 
-    .product-box {
-      width: calc(45% - 20px);
-      margin-bottom: 20px;
-      padding: 10px;
-      background-color: #eee;
-      border: 3px solid #000;
-      border-radius: 5px;
-      overflow: hidden;
-      text-align: center;
+    /* Product Card */
+    .product-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden; cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      position: relative; animation: fadeUp 0.5s ease both;
     }
-
-    .product-box img {
-      max-width: 100%;
-      height: auto;
-      margin-bottom: 10px;
+    .product-card:hover {
+      transform: translateY(-7px);
+      box-shadow: var(--shadow-glow), 0 0 55px rgba(0,0,0,0.8);
+      border-color: rgba(245,166,35,0.28);
     }
-
-    .product-box h3,
-    .product-box p {
-      color: orange;
-      margin: 0;
+    .product-img-wrap {
+      width: 100%; height: 195px; overflow: hidden; position: relative; background: #1a1a1a;
     }
+    /* Black glow around image */
+    .product-img-wrap::before {
+      content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      box-shadow: inset 0 0 28px rgba(0,0,0,0.85), inset 0 -24px 30px rgba(0,0,0,0.9);
+      border-radius: 0;
+    }
+    .product-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.4s ease;
+    }
+    .product-card:hover .product-img-wrap img { transform: scale(1.08); }
+    .product-info { padding: 14px; }
+    .product-info h3 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 5px; line-height: 1.4; }
+    .product-info .desc { font-size: 12px; color: var(--text-dim); margin-bottom: 9px; line-height: 1.5; }
+    .price-row { display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; }
+    .price-now { font-size: 15px; font-weight: 700; color: var(--accent); }
+    .price-old { font-size: 11px; color: var(--text-dim); text-decoration: line-through; }
+    .badges { margin-top: 7px; display: flex; gap: 5px; flex-wrap: wrap; }
+    .badge { font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 700; }
+    .badge-hot { background: #e53935; color: #fff; }
+    .badge-sale { background: linear-gradient(90deg, var(--accent), var(--accent2)); color: #000; }
+    .badge-special { background: linear-gradient(90deg, #7c3aed, #2563eb); color: #fff; }
 
+    /* ===== PRODUCT MODAL ===== */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.78); backdrop-filter: blur(8px);
+      z-index: 500; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.open { display: flex; animation: fadeOv 0.22s ease; }
+    @keyframes fadeOv { from { opacity: 0; } to { opacity: 1; } }
+    .modal-box {
+      background: #1c1c1c; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 22px; width: 100%; max-width: 740px;
+      max-height: 88vh; overflow-y: auto; display: flex;
+      animation: slideUp 0.28s ease; position: relative;
+    }
+    @keyframes slideUp { from { transform: translateY(28px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .modal-close {
+      position: absolute; top: 12px; right: 12px;
+      width: 34px; height: 34px; background: rgba(255,255,255,0.1);
+      border: none; border-radius: 50%; color: #fff; font-size: 18px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      z-index: 10; transition: background 0.2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.2); }
+    .modal-img-col {
+      width: 300px; flex-shrink: 0; border-radius: 22px 0 0 22px;
+      overflow: hidden; position: relative; background: #111;
+    }
+    .modal-img-col img {
+      width: 100%; height: 100%; min-height: 260px; object-fit: cover; display: block;
+    }
+    .modal-nav-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px; background: rgba(0,0,0,0.5);
+    }
+    .modal-arr {
+      background: rgba(0,0,0,0.6); border: none; color: #fff;
+      width: 32px; height: 32px; border-radius: 50%;
+      cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-arr:hover { background: var(--accent); color: #000; }
+    .modal-dots { display: flex; gap: 5px; }
+    .modal-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: background 0.2s; }
+    .modal-dot.active { background: var(--accent); }
+    .modal-info-col { flex: 1; padding: 30px 26px 26px; }
+    .modal-info-col h2 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+    .modal-info-col .m-desc { color: var(--text-dim); font-size: 13px; line-height: 1.7; margin-bottom: 18px; }
+    .modal-price-now { font-size: 26px; font-weight: 700; color: var(--accent); }
+    .modal-price-old { font-size: 14px; color: var(--text-dim); text-decoration: line-through; margin-left: 8px; }
+    .modal-order-btn {
+      margin-top: 22px; display: flex; align-items: center; gap: 9px;
+      background: var(--green); color: #fff; text-decoration: none;
+      border-radius: 12px; padding: 13px 22px; font-size: 15px; font-weight: 700;
+      justify-content: center; transition: background 0.2s, transform 0.2s; width: 100%;
+    }
+    .modal-order-btn:hover { background: #1aad55; transform: scale(1.02); }
+    .modal-order-btn img { width: 20px; height: 20px; }
+
+    /* ===== BOTTOM POPUPS ===== */
+    .overlay-bg {
+      display: none; position: fixed; inset: 0; z-index: 399;
+      background: rgba(0,0,0,0.55);
+    }
+    .overlay-bg.open { display: block; }
+    .btm-popup {
+      position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 460px;
+      background: #1c1c1c; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 26px 26px 0 0; padding: 18px 22px 36px;
+      z-index: 400; transition: bottom 0.38s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .btm-popup.open { bottom: 0; }
+    .popup-handle {
+      width: 44px; height: 4px; background: rgba(255,255,255,0.2);
+      border-radius: 4px; margin: 0 auto 18px;
+    }
+    .popup-title-h { font-size: 14px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; text-align: center; }
+    .popup-sec-label { font-size: 11px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; margin-top: 14px; }
+    .popup-opts { display: flex; flex-direction: column; gap: 7px; }
+    .popup-opt {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: 11px; padding: 11px 14px; color: var(--text);
+      font-size: 14px; cursor: pointer; display: flex; align-items: center;
+      gap: 9px; transition: background 0.2s, border-color 0.2s;
+    }
+    .popup-opt:hover { background: rgba(245,166,35,0.1); border-color: var(--accent); }
+    .popup-opt.selected { background: rgba(245,166,35,0.14); border-color: var(--accent); }
+
+    /* ===== PAYMENT MODAL ===== */
+    .pay-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.78); backdrop-filter: blur(8px);
+      z-index: 500; align-items: center; justify-content: center; padding: 20px;
+    }
+    .pay-overlay.open { display: flex; animation: fadeOv 0.22s ease; }
+    .pay-modal {
+      background: #1c1c1c; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 22px; width: 100%; max-width: 580px;
+      padding: 38px; animation: slideUp 0.28s ease; position: relative;
+    }
+    .pay-modal h2 { font-family: 'Bebas Neue', sans-serif; font-size: 34px; margin-bottom: 6px; }
+    .pay-modal > p { color: var(--text-dim); margin-bottom: 24px; font-size: 14px; }
+    .pay-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    .pay-card {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px; text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .pay-card:hover { border-color: var(--accent); transform: scale(1.03); }
+    .pay-card img { width: 60px; height: 60px; object-fit: contain; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto; }
+    .pay-card p { color: var(--text); font-weight: 600; margin: 0; font-size: 14px; }
+
+    /* ===== FOOTER ===== */
     footer {
-      background-color: #040404;
-      padding: 10px 20px;
-      text-align: center;
-      color: #fff;
+      background: #0a0a0a; border-top: 1px solid var(--border);
+      text-align: center; padding: 22px; color: var(--text-dim);
+      font-size: 12px; line-height: 1.8; margin-top: 60px;
     }
+    footer strong { color: var(--accent); }
 
-    .vertical-line {
-      border-left: 1px solid #ccc;
-      height: 100%;
-      margin-left: 20px;
-    }
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp { from { opacity:0; transform: translateY(18px); } to { opacity:1; transform: translateY(0); } }
+    @keyframes fadeRight { from { opacity:0; transform: translateX(18px); } to { opacity:1; transform: translateX(0); } }
 
-    /* Portfolio styles - IMPROVED */
-    .portfolio-container {
-      width: 100%;
-      padding: 30px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #f0f0f0;
-      border-bottom: 1px solid #ccc;
-      box-sizing: border-box;
-    }
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-    .portfolio-info {
-      width: 50%;
-      padding-right: 30px;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    .portfolio-info.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .portfolio-info h2 {
-      color: #333;
-      font-size: 36px;
-      margin-bottom: 10px;
-    }
-
-    .portfolio-info p {
-      color: #666;
-      font-size: 18px;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    .portfolio-photo {
-      width: 40%;
-      height: 300px;
-      background-color: #ddd;
-      border: 3px solid #000;
-      border-radius: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      margin-left: auto;
-      margin-right: 0;
-      opacity: 0;
-      transform: translateX(30px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    .portfolio-photo.active {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .portfolio-photo img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: cover;
-    }
-
-    .nav-buttons {
-      display: flex;
-      gap: 10px;
-    }
-
-    .nav-button {
-      background-color: orange;
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .nav-button:hover {
-      background-color: #ff8c00;
-    }
-
-    /* Animation classes */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeInLeft {
-      from {
-        opacity: 0;
-        transform: translateX(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes fadeOutDown {
-      from {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      to {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-    }
-
-    @keyframes fadeOutRight {
-      from {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      to {
-        opacity: 0;
-        transform: translateX(30px);
-      }
-    }
-
-    /* Shop Content Animation */
-    #shop-content {
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    #shop-content.fade-in {
-      animation: fadeInUp 1s forwards;
-    }
-
-    #shop-content.fade-out {
-      animation: fadeOutDown 1s forwards;
-    }
-
-    /* Portfolio Section Animation */
-    #portfolio-section {
-      opacity: 1; /* Changed from 0 to 1 */
-      transition: opacity 0.5s ease;
-    }
-
-    #portfolio-section.fade-in {
-      opacity: 1;
-    }
-
-    #portfolio-section.fade-out {
-      opacity: 0;
-    }
-
-        /* Social Media Buttons */
-    .social-icons {
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      gap: 10px;
-    }
-
-    .social-icon {
-      width: 40px;
-      height: 40px;
-      background-color: #fff;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      transition: transform 0.3s ease, background-color 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-
-    .social-icon:hover {
-      transform: scale(1.2);
-    }
-
-    /* Payment Methods */
-    .payment-methods {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      padding: 20px;
-      background-color: #f9f9f9;
-      border-radius: 10px;
-      margin-top: 20px;
-    }
-
-    .payment-method {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 120px;
-    }
-
-    .payment-method img {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-      background-color: white;
-      padding: 10px;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      margin-bottom: 10px;
-    }
-
-    .payment-method p {
-      margin: 0;
-      text-align: center;
-      font-weight: bold;
-      color: #333;
-    }
-
-    /* Theme Toggle Switch */
-    .theme-toggle {
-      background-color: #f0f0f0;
-      border-radius: 30px;
-      padding: 5px;
-      width: 60px;
-      height: 30px;
-      position: relative;
-      cursor: pointer;
-      box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-      margin: 20px auto;
-      display: flex;
-      align-items: center;
-    }
-
-    .toggle-ball {
-      width: 24px;
-      height: 24px;
-      background-color: #fff;
-      position: absolute;
-      border-radius: 50%;
-      transition: transform 0.3s ease, background-color 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      left: 3px;
-    }
-
-    .toggle-ball.dark {
-      transform: translateX(30px);
-      background-color: #333;
-    }
-
-    /* Dark theme colors */
-    body.dark-theme {
-      background-color: #222;
-      color: #eee;
-    }
-
-    .dark-theme .container {
-      background-color: #333;
-      border-color: #555;
-    }
-
-    .dark-theme .product-box {
-      background-color: #444;
-      border-color: #555;
-    }
-
-    .dark-theme .portfolio-container {
-      background-color: #222;
-    }
-
-    .dark-theme .portfolio-info h2 {
-      color: #fff;
-    }
-
-    .dark-theme .portfolio-info p {
-      color: #ccc;
-    }
-
-    .dark-theme .payment-methods {
-      background-color: #444;
-    }
-
-    .dark-theme .sidebar {
-      background-color: #444;
-    }
-
-    /* Fade animations for menu items */
-    .fade-in-element {
-      animation: fadeInElement 0.5s forwards;
-    }
-
-    .fade-out-element {
-      animation: fadeOutElement 0.5s forwards;
-    }
-
-    @keyframes fadeInElement {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeOutElement {
-      from {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      to {
-        opacity: 0;
-        transform: translateY(10px);
-      }
+    @media (max-width: 760px) {
+      .portfolio-hero { padding: 40px 20px; }
+      .portfolio-inner { flex-direction: column; gap: 30px; }
+      .portfolio-card-wrap { display: flex; justify-content: center; }
+      .profile-card { width: 200px; }
+      .modal-box { flex-direction: column; }
+      .modal-img-col { width: 100%; border-radius: 22px 22px 0 0; min-height: 190px; }
+      header { flex-wrap: wrap; padding: 8px 12px; }
+      .header-search { order: 3; flex: 1 1 100%; max-width: 100%; }
+      .wa-btn span { display: none; }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="logo">
-        <span class="menu-icon"></span>
-        <ul class="menu">
-          <li>Lihat Saldo</li>
-          <li>Akun</li>
-          <li>Log In</li>
-          <li>Log Out</li>
-        </ul>
-      </div>
-      <h1>Zmc18 Shop IDN</h1>
-      <div class="nav-buttons">
-        <button id="portfolio-btn" class="nav-button">Portfolio</button>
-        <button id="shop-btn" class="nav-button">Shop</button>
-      </div>
-      <div class="search-bar">
-        <input type="text" placeholder="Cari...">
-        <button>Cari</button>
-      </div>
-    </header>
 
-    <!-- Portfolio Section -->
-    <div id="portfolio-section" class="portfolio-container">
-      <div class="portfolio-info">
-        <h2>Muhammad Zidane Akbari</h2>
-        <p>Saya adalah seorang Programmer yang bekerja dibagian Robotik, atau bisa dibilang sebagai seorang Insinyur Robotik</p>
-        <p>Spesialisasi dalam Pengembangan Web, Robotika, Embedded Systems, AI + IoT, Animasi, Seni Murni, dan Seni digital. Dengan pengalaman yang saya miliki, saya telah mengerjakan berbagai macam proyek dari pembuatan website hingga sistem robotika canggih.</p>
-        <p>Silahkan lihat layanan yang saya tawarkan melalui tombol "Shop" di atas.</p>
-      </div>
-      <div class="portfolio-photo">
-        <img src="profile-photo.jpeg" alt="Zmc Profile Photo" onerror="this.src='https://via.placeholder.com/400x300?text=Foto+Profil+Zmc'">
-        <div class="social-icons">
-          <a href="https://www.youtube.com/channel/UCz0OJuK-72fhbMQ8xXfywcQ" target="_blank" class="social-icon">
-            <img src="YT.png" alt="YouTube">
-          </a>
-          <a href="https://l.instagram.com/?u=https%3A%2F%2Finstagram.com%2Fmc.zminecrafter_18%3Figshid%3DMzNlNGNkZWQ4Mg%253D%253D&e=AT2kX_c9_O7sSqYEs2zmKjQUCEXxyueGLEKFLV9RL9jFYiA6WnGlvtlXmAsfZxhXIA1Vsb-dHct27UUvviG3P3_S78d09WQKttVKX0rVE3I9ZEM3xEFrBrYNEIM" target="_blank" class="social-icon">
-            <img src="IG.png" alt="Instagram">
-          </a>
-          <a href="https://wa.me/089510809179" target="_blank" class="social-icon">
-            <img src="WA.png" alt="WhatsApp">
-          </a>
-          <a href="https://github.com/Zmc18-Robotics?tab=repositories" target="_blank" class="social-icon">
-            <img src="GH.png" alt="GitHub">
-          </a>
-          <a href="https://discord.com/channels/1353313549631492218/1353313549631492221" target="_blank" class="social-icon">
-            <img src="DC.png" alt="Discord">
-          </a>
-        </div>
-      </div>
-    </div>
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-logo" onclick="showSection('portfolio')">ZMC<span>18</span></div>
 
-    <!-- Shop Content -->
-    <div id="shop-content" style="display: none;">
-      <div class="content">
-        <div class="sidebar">
-          <ul>
-              <li id="lihat-produk">Lihat Produk</li>
-              <li id="produk-laris">Produk Terlaris</li>
-              <li id="pembelian">Pembelian</li>
-              <li id="payment-methods-btn">Metode Pembayaran</li>
-              <li id="settings-btn">Setelan</li>
-          </ul>
-      </div>
-        <div class="vertical-line"></div>
-        <div class="product-container">
-          <!-- Product boxes will be dynamically added here using JavaScript -->
-        </div>
-      </div>
-    </div>
-    <div id="settings-content" style="display: none;" class="content">
-      <div class="sidebar">
-        <ul>
-          <li id="back-to-shop">Kembali</li>
-        </ul>
-      </div>
-      <div class="vertical-line"></div>
-      <div class="product-container">
-        <h2>Pengaturan</h2>
-        <div>
-          <h3>Tema:</h3>
-          <div class="theme-toggle">
-            <div class="toggle-ball"></div>
-          </div>
-          <p id="theme-text">Mode Terang</p>
-        </div>
-      </div>
-    </div>
-    <div id="payment-content" style="display: none;" class="content">
-      <div class="sidebar">
-        <ul>
-          <li id="back-to-shop-from-payment">Kembali</li>
-        </ul>
-      </div>
-      <div class="vertical-line"></div>
-      <div class="product-container">
-        <h2>Metode Pembayaran</h2>
-        <p>Anda bisa membayar menggunakan metode-metode pembayaran berikut ini:</p>
-        <div class="payment-methods">
-          <div class="payment-method">
-            <img src="Dana.png" alt="Dana">
-            <p>Dana</p>
-          </div>
-          <div class="payment-method">
-            <img src="SP.png" alt="ShopeePay">
-            <p>ShopeePay</p>
-          </div>
-          <div class="payment-method">
-            <img src="Qris.png" alt="QRIS">
-            <p>QRIS</p>
-          </div>
-          <div class="payment-method">
-            <img src="Bank.png" alt="Transfer Bank">
-            <p>Transfer Bank</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <footer>
-      <p>By Zmc</p>
-      <p>Dilarang mengklaim situs web ini, jika mengklaim maka anda dinyatakan melanggar Undang-Undang Nomor 28 Tahun 2014, dan penjara minimal 2 tahun</p>
-    </footer>
+  <div class="header-search">
+    <span class="search-ic">🔍</span>
+    <input type="text" id="search-input" placeholder="Cari Produk..." oninput="handleSearch()" onfocus="showSection('shop')">
   </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const productContainer = document.querySelector('.product-container');
-      const sidebar = document.querySelector('.sidebar');
-      const content = document.querySelector('.content');
-      const header = document.querySelector('header');
-      const portfolioSection = document.getElementById('portfolio-section');
-      const shopContent = document.getElementById('shop-content');
-      const portfolioBtn = document.getElementById('portfolio-btn');
-      const shopBtn = document.getElementById('shop-btn');
-      const portfolioInfo = document.querySelector('.portfolio-info');
-      const portfolioPhoto = document.querySelector('.portfolio-photo');
-      const settingsContent = document.getElementById('settings-content');
-      const paymentContent = document.getElementById('payment-content');
-      const backToShopBtn = document.getElementById('back-to-shop');
-      const backToShopFromPaymentBtn = document.getElementById('back-to-shop-from-payment');
-      const themeToggle = document.querySelector('.theme-toggle');
-      const toggleBall = document.querySelector('.toggle-ball');
-      const themeText = document.getElementById('theme-text');
-  
-      // Sample product data
-      const products = [
-        { image: 'product13.jpeg', name: 'Jasa membuat Robot', price: 'Rp. 250.000 - Rp. X ( tergantung kesulitan )', author: 'By Zmc' },
-        { image: 'product14.jpeg', name: 'Jasa Koding Embedded IoT', price: 'Rp. 75.000 - Rp. X ( tergantung kesulitan )', author: 'By Zmc' },
-        { image: 'product15.jpeg', name: 'Sensor Anti Maling', price: 'Rp. 300.000. R̶p̶ 3̶3̶5̶0̶0̶0̶', author: 'By Zmc' },
-        { image: 'product3v2.jpg', name: 'Jasa Gambar Anime Digital', price: 'Rp. 350.000. R̶p̶ 4̶0̶0̶0̶0̶0̶', author: 'By Zmc' },
-        { image: 'product1.jpg', name: 'Jasa Sketsa gambar', price: 'Rp. 20.000', author: 'By Zmc' },
-        { image: 'product2.jpg', name: 'Jasa Gambar Anime Tradisional No Color', price: 'Rp. 18.000', author: 'By Zmc' },
-        { image: 'product4.jpg', name: 'Jasa Renderan 16:9 ( Full Body )', price: 'Rp. 45.000 ( + Rp.5000 jika menambah karakter )', author: 'By Zmc' },
-        { image: 'project5.jpg', name: 'Jasa Renderan 1:1 ( Full Body )', price: 'Rp. 32.000 ( + Rp.5000 jika menambah karakter )', author: 'By Zmc' },
-        { image: 'product7.png', name: 'Jasa Renderan 1:1 ( Half Body )', price: 'Rp. 25.000 ( + Rp.3000 jika menambah karakter )', author: 'By Zmc' },
-        { image: 'product8.png', name: 'Jasa Membuat Animasi ( Mineimator Only )', price: 'Rp. 8.000 per detik', author: 'By Zmc' },
-        { image: 'product10.png', name: 'Jasa Pembuatan Rig / Model 3D', price: 'Rp. 50.000 - Rp. X ( tergantung kesulitan )', author: 'By Zmc' },
-        { image: 'product11.png', name: 'Jasa Membuat website', price: 'Rp. 65.000 - Rp. X ( tergantung kesulitan )', author: 'By Zmc' },
-        { image: 'product12.jpg', name: 'Jasa membuat kerajinan kain flanel', price: 'Rp. 12.000 - Rp. X ( tergantung kesulitan )', author: 'By Zmc' },
-      ];
-  
-      const bestSellingProducts = [
-        { image: 'product13.jpeg', name: 'Jasa membuat Robot', price: 'Rp. 250.000 - Rp. X ( tergantung kesulitan )', author: 'By Zmc' },
-        { image: 'product3.jpeg', name: 'Jasa Gambar Anime Digital', price: 'Rp. 75.000', author: 'By Zmc' },
-      ];
-  
-      // Theme Toggle Functionality
-      let isDarkTheme = false;
-      
-      themeToggle.addEventListener('click', function() {
-        document.body.classList.toggle('dark-theme');
-        toggleBall.classList.toggle('dark');
-        isDarkTheme = !isDarkTheme;
-        themeText.textContent = isDarkTheme ? 'Mode Gelap' : 'Mode Terang';
-        
-        // Animation for toggle
-        toggleBall.style.transition = 'transform 0.3s ease, background-color 0.3s ease';
-        document.body.style.transition = 'background-color 0.5s ease';
-        document.querySelectorAll('.container, .product-box, .portfolio-container').forEach(el => {
-          el.style.transition = 'background-color 0.5s ease, border-color 0.5s ease';
-        });
-      });
-  
-      // Helper function to handle content transitions
-      function showContent(showElement, hideElements) {
-        // First hide all other elements with fade out
-        hideElements.forEach(el => {
-          if (el && el.style.display !== 'none') {
-            el.classList.add('fade-out-element');
-            setTimeout(() => {
-              el.style.display = 'none';
-              el.classList.remove('fade-out-element');
-            }, 500);
-          }
-        });
-        
-        // Then show the target element with fade in
-        setTimeout(() => {
-          if (showElement) {
-            showElement.style.display = showElement === portfolioSection ? 'flex' : 'block';
-            showElement.classList.add('fade-in-element');
-            
-            if (showElement === portfolioSection) {
-              setTimeout(() => {
-                portfolioInfo.classList.add('active');
-                setTimeout(() => {
-                  portfolioPhoto.classList.add('active');
-                }, 300);
-              }, 300);
-            }
-            
-            if (showElement === shopContent) {
-              displayProducts();
-            }
-          }
-        }, 500);
-      }
-  
-      // Toggle between Portfolio and Shop sections with animations
-      function showPortfolio() {
-        portfolioInfo.classList.remove('active');
-        portfolioPhoto.classList.remove('active');
-        showContent(portfolioSection, [shopContent, settingsContent, paymentContent]);
-      }
-  
-      function showShop() {
-        portfolioInfo.classList.remove('active');
-        portfolioPhoto.classList.remove('active');
-        showContent(shopContent, [portfolioSection, settingsContent, paymentContent]);
-      }
-  
-      function showSettings() {
-        showContent(settingsContent, [shopContent, portfolioSection, paymentContent]);
-      }
-  
-      function showPaymentMethods() {
-        showContent(paymentContent, [shopContent, portfolioSection, settingsContent]);
-      }
-  
-      // Function to display best-selling products
-      function displayBestSellingProducts() {
-        showElement(productContainer);
-        productContainer.innerHTML = ''; // Clear product container
-        bestSellingProducts.forEach(product => {
-          const productBox = document.createElement('div');
-          productBox.classList.add('product-box', 'fade-in-element');
-  
-          const productImage = document.createElement('img');
-          productImage.src = product.image;
-          productImage.alt = product.name;
-          productImage.onerror = function() {
-            this.src = 'https://via.placeholder.com/150x150?text=' + product.name;
-          };
-  
-          const productName = document.createElement('h3');
-          productName.textContent = product.name;
-  
-          const productPrice = document.createElement('p');
-          productPrice.textContent = product.price;
-  
-          const productAuthor = document.createElement('p');
-          productAuthor.textContent = product.author;
-  
-          productBox.appendChild(productImage);
-          productBox.appendChild(productName);
-          productBox.appendChild(productPrice);
-          productBox.appendChild(productAuthor);
-  
-          productContainer.appendChild(productBox);
-        });
-      }
-  
-      // Helper function to show an element with animation
-      function showElement(element) {
-        element.style.display = 'flex';
-        element.classList.add('fade-in-element');
-        setTimeout(() => {
-          element.classList.remove('fade-in-element');
-        }, 500);
-      }
-  
-      // Add event listener for the search button
-      document.querySelector('.search-bar button').addEventListener('click', filterProducts);
-      document.querySelector('.search-bar input[type="text"]').addEventListener('keyup', function(event) {
-          if (event.key === 'Enter') {
-              filterProducts();
-          }
-      });
 
-      function filterProducts() {
-          const searchTerm = document.querySelector('.search-bar input[type="text"]').value.toLowerCase();
-          const allProductBoxes = productContainer.querySelectorAll('.product-box');
-          let found = false;
+  <!-- Filter catalog icon -->
+  <button class="icon-btn" onclick="openFilterPopup()" title="Katalog / Filter">&#9776;</button>
 
-          allProductBoxes.forEach(box => {
-              const productName = box.querySelector('h3').textContent.toLowerCase();
-              if (productName.includes(searchTerm)) {
-                  box.style.display = 'block'; // Show the product box
-                  found = true;
-              } else {
-                  box.style.display = 'none'; // Hide the product box
-              }
-          });
+  <div class="header-nav">
+    <button class="nav-btn active" id="nav-portfolio" onclick="showSection('portfolio')">Portfolio</button>
+    <button class="nav-btn" id="nav-shop" onclick="showSection('shop')">Shop</button>
+    <a class="wa-btn" href="https://wa.me/+6289510809179" target="_blank">
+      <img src="WA.png" alt="" onerror="this.style.display='none'">
+      <span>Chat dengan penjual</span>
+    </a>
+    <!-- Main menu icon (4 lines = hamburger) -->
+    <button class="icon-btn" onclick="openMenuPopup()" title="Menu">&#9776;</button>
+  </div>
+</header>
 
-          if (!found && searchTerm !== '') {
-              productContainer.innerHTML = '<p>Produk tidak ditemukan.</p>';
-          } else if (searchTerm === '' && allProductBoxes.length === 0) {
-              // If search bar is empty and no products are displayed, re-display all products
-              displayProducts();
-          } else if (searchTerm === '' && allProductBoxes.length > 0) {
-              // If search bar is empty and products are already displayed, ensure all are shown
-              allProductBoxes.forEach(box => {
-                  box.style.display = 'block';
-              });
-          }
-      }
+<!-- ===== PORTFOLIO SECTION ===== -->
+<div id="portfolio-section" class="section active">
+  <div class="portfolio-hero">
+    <div class="portfolio-inner">
+      <div class="portfolio-text">
+        <h1>Muhammad Zidane Akbari</h1>
+        <span class="title-tag">Robotics AIoT Engineer</span>
+        <p>Saya adalah seorang Programmer yang bekerja dibagian Robotik, atau bisa dibilang sebagai seorang Insinyur Robotik.</p>
+        <p>Spesialisasi dalam Pengembangan Web, Robotika, Embedded Systems, AI + IoT, Animasi, Seni Murni, dan Seni digital. Dengan pengalaman yang saya miliki, saya telah mengerjakan berbagai macam proyek dari pembuatan website hingga sistem robotika canggih.</p>
+        <p>Silahkan lihat layanan yang saya tawarkan melalui tombol <strong style="color:var(--accent)">"Shop"</strong> di atas.</p>
+        <div class="social-row">
+          <a class="social-pill" href="https://www.youtube.com/channel/UCz0OJuK-72fhbMQ8xXfywcQ" target="_blank">
+            <img src="YT.png" alt="YT" onerror="this.style.display='none'"> YouTube
+          </a>
+          <a class="social-pill" href="https://instagram.com/mc.zminecrafter_18" target="_blank">
+            <img src="IG.png" alt="IG" onerror="this.style.display='none'"> Instagram
+          </a>
+          <a class="social-pill" href="https://github.com/Zmc18-Robotics" target="_blank">
+            <img src="GH.png" alt="GH" onerror="this.style.display='none'"> GitHub
+          </a>
+          <a class="social-pill" href="https://wa.me/+6289510809179" target="_blank">
+            <img src="WA.png" alt="WA" onerror="this.style.display='none'"> WhatsApp
+          </a>
+          <a class="social-pill" href="https://discord.com/channels/1353313549631492218/1353313549631492221" target="_blank">
+            <img src="DC.png" alt="DC" onerror="this.style.display='none'"> Discord
+          </a>
+        </div>
+      </div>
+      <div class="portfolio-card-wrap">
+        <div class="profile-card">
+          <img class="profile-img" src="profile-photo.jpeg" alt="Profile" onerror="this.src='profile-photo2.jpeg'">
+          <div class="profile-card-info">
+            <h3>Muhammad Zidane Akbari</h3>
+            <p>Robotics AIoT Engineer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-      // Modify displayProducts to also show the products if the search bar is empty
-      function displayProducts() {
-          productContainer.innerHTML = ''; // Clear product container
-          showElement(productContainer);
+<!-- ===== SHOP SECTION ===== -->
+<div id="shop-section" class="section">
+  <h2 class="shop-title" id="shop-title-el">Shop</h2>
+  <div class="products-grid" id="products-grid"></div>
+  <div class="no-results" id="no-results" style="display:none">Produk tidak ditemukan 😕</div>
+</div>
 
-          products.forEach(product => {
-              const productBox = document.createElement('div');
-              productBox.classList.add('product-box', 'fade-in-element');
+<!-- ===== PRODUCT MODAL ===== -->
+<div class="modal-overlay" id="product-modal" onclick="bgCloseModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-img-col">
+      <img id="modal-img" src="" alt="">
+      <div class="modal-nav-bar">
+        <button class="modal-arr" onclick="imgPrev()">&#9664;</button>
+        <div class="modal-dots" id="modal-dots"></div>
+        <button class="modal-arr" onclick="imgNext()">&#9654;</button>
+      </div>
+    </div>
+    <div class="modal-info-col">
+      <h2 id="modal-name"></h2>
+      <p class="m-desc" id="modal-desc"></p>
+      <div>
+        <span class="modal-price-now" id="modal-price"></span>
+        <span class="modal-price-old" id="modal-old"></span>
+      </div>
+      <a class="modal-order-btn" id="modal-wa" href="#" target="_blank">
+        <img src="WA.png" alt="" onerror="this.style.display='none'" style="width:20px;height:20px"> Pesan sekarang!
+      </a>
+    </div>
+  </div>
+</div>
 
-              const productImage = document.createElement('img');
-              productImage.src = product.image;
-              productImage.alt = product.name;
-              productImage.onerror = function() {
-                  this.src = 'https://via.placeholder.com/150x150?text=' + product.name;
-              };
+<!-- ===== MENU POPUP ===== -->
+<div class="overlay-bg" id="menu-overlay" onclick="closeMenuPopup()"></div>
+<div class="btm-popup" id="menu-popup">
+  <div class="popup-handle"></div>
+  <div class="popup-title-h" id="menu-popup-title">Menu</div>
 
-              const productName = document.createElement('h3');
-              productName.textContent = product.name;
+  <div class="popup-sec-label" id="menu-sec-nav">Navigasi</div>
+  <div class="popup-opts">
+    <div class="popup-opt" onclick="closeMenuPopup(); showSection('shop')">
+      🛍️ <span id="menu-opt-products">Produk</span>
+    </div>
+    <div class="popup-opt" onclick="closeMenuPopup(); openPayModal()">
+      💳 <span id="menu-opt-payment">Metode Pembayaran</span>
+    </div>
+  </div>
 
-              const productPrice = document.createElement('p');
-              productPrice.textContent = product.price;
+  <div class="popup-sec-label" id="menu-sec-lang">Bahasa / Language</div>
+  <div class="popup-opts">
+    <div class="popup-opt selected" id="lang-id" onclick="setLang('id')">
+      🇮🇩 Indonesia
+    </div>
+    <div class="popup-opt" id="lang-en" onclick="setLang('en')">
+      🇺🇸 English
+    </div>
+  </div>
+</div>
 
-              const productAuthor = document.createElement('p');
-              productAuthor.textContent = product.author;
+<!-- ===== FILTER POPUP ===== -->
+<div class="overlay-bg" id="filter-overlay" onclick="closeFilterPopup()"></div>
+<div class="btm-popup" id="filter-popup">
+  <div class="popup-handle"></div>
+  <div class="popup-title-h" id="filter-popup-title">Katalog / Filter</div>
+  <div class="popup-opts">
+    <div class="popup-opt" onclick="applyFilter('all'); closeFilterPopup()">📦 <span id="f-all">Semua Produk</span></div>
+    <div class="popup-opt" onclick="applyFilter('cheapest'); closeFilterPopup()">💸 <span id="f-cheapest">Harga Termurah</span></div>
+    <div class="popup-opt" onclick="applyFilter('expensive'); closeFilterPopup()">💎 <span id="f-expensive">Harga Tertinggi</span></div>
+    <div class="popup-opt" onclick="applyFilter('flash'); closeFilterPopup()">⚡ <span id="f-flash">Flash Sale (Diskon Terbesar)</span></div>
+    <div class="popup-opt" onclick="applyFilter('bestseller'); closeFilterPopup()">🔥 <span id="f-bestseller">Produk Terlaris</span></div>
+    <div class="popup-opt" onclick="applyFilter('special'); closeFilterPopup()">⭐ <span id="f-special">Produk Spesial</span></div>
+  </div>
+</div>
 
-              productBox.appendChild(productImage);
-              productBox.appendChild(productName);
-              productBox.appendChild(productPrice);
-              productBox.appendChild(productAuthor);
+<!-- ===== PAYMENT MODAL ===== -->
+<div class="pay-overlay" id="pay-overlay" onclick="bgClosePayModal(event)">
+  <div class="pay-modal">
+    <button class="modal-close" onclick="closePayModal()">✕</button>
+    <h2 id="pay-title">Metode Pembayaran</h2>
+    <p id="pay-sub">Anda bisa membayar menggunakan metode-metode pembayaran berikut ini:</p>
+    <div class="pay-grid">
+      <div class="pay-card">
+        <img src="Dana.png" alt="Dana" onerror="this.style.display='none'">
+        <p>Dana</p>
+      </div>
+      <div class="pay-card">
+        <img src="SP.png" alt="ShopeePay" onerror="this.style.display='none'">
+        <p>ShopeePay</p>
+      </div>
+      <div class="pay-card">
+        <img src="Qris.png" alt="QRIS" onerror="this.style.display='none'">
+        <p>QRIS</p>
+      </div>
+      <div class="pay-card">
+        <img src="Bank.png" alt="Transfer Bank" onerror="this.style.display='none'">
+        <p>Transfer Bank</p>
+      </div>
+    </div>
+  </div>
+</div>
 
-              productContainer.appendChild(productBox);
-          });
-      }
-      
-      //Informasi tombol Pembelian
-        function displayPurchaseInfo() {
-          productContainer.innerHTML = ''; // Clear product container
-          
-          // Create purchase info section
-          const purchaseInfo = document.createElement('div');
-          purchaseInfo.classList.add('purchase-info');
-          
-          purchaseInfo.innerHTML = `
-              <h2>Informasi Pembelian</h2>
-              <p>Untuk pembelian anda bisa hubungi 0895-1080-9179</p>
-              <a href="https://wa.me/+6289510809179" class="whatsapp-button" target="_blank" style="background-color: #25D366; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; transition: background-color 0.3s;">
-                  Chat via WhatsApp
-              </a>
-          `;
-          
-          productContainer.appendChild(purchaseInfo);
-      }
-  
-          // Function to display purchase info
-      function displayPurchaseInfo() {
-        productContainer.innerHTML = ''; // Clear product container
-        
-        // Create purchase info section
-        const purchaseInfo = document.createElement('div');
-        purchaseInfo.classList.add('purchase-info');
-        
-        purchaseInfo.innerHTML = `
-            <h2>Informasi Pembelian</h2>
-            <p>Untuk pembelian anda bisa hubungi 0895-1080-9179</p>
-            <a href="https://wa.me/+6289510809179" class="whatsapp-button" target="_blank" style="background-color: #25D366; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; transition: background-color 0.3s;">
-                Chat via WhatsApp
-            </a>
-        `;
-        
-        productContainer.appendChild(purchaseInfo);
-      }
-      // Add products to the product container
-      function addProducts() {
-        products.forEach(product => {
-          const productBox = document.createElement('div');
-          productBox.classList.add('product-box', 'fade-in-element');
-  
-          const productImage = document.createElement('img');
-          productImage.src = product.image;
-          productImage.alt = product.name;
-          productImage.onerror = function() {
-            this.src = 'https://via.placeholder.com/150x150?text=' + product.name;
-          };
-  
-          const productName = document.createElement('h3');
-          productName.textContent = product.name;
-  
-          const productPrice = document.createElement('p');
-          productPrice.textContent = product.price;
-  
-          const productAuthor = document.createElement('p');
-          productAuthor.textContent = product.author;
-  
-          productBox.appendChild(productImage);
-          productBox.appendChild(productName);
-          productBox.appendChild(productPrice);
-          productBox.appendChild(productAuthor);
-  
-          productContainer.appendChild(productBox);
-        });
-      }
-  
-      // Add event listeners for navigation buttons
-      portfolioBtn.addEventListener('click', showPortfolio);
-      shopBtn.addEventListener('click', showShop);
-      backToShopBtn.addEventListener('click', showShop);
-      backToShopFromPaymentBtn.addEventListener('click', showShop);
+<!-- ===== FOOTER ===== -->
+<footer>
+  <strong>By Zmc</strong><br>
+  Dilarang mengklaim situs web ini, jika mengklaim maka anda dinyatakan melanggar Undang-Undang Nomor 28 Tahun 2014, dan penjara minimal 2 tahun
+</footer>
 
-      // Add event listeners for sidebar menu items
-      document.getElementById('lihat-produk').addEventListener('click', displayProducts); // Pastikan ini ada
-      document.getElementById('produk-laris').addEventListener('click', displayBestSellingProducts);
-      document.getElementById('pembelian').addEventListener('click', displayPurchaseInfo);
-      document.getElementById('payment-methods-btn').addEventListener('click', showPaymentMethods);
-      document.getElementById('settings-btn').addEventListener('click', showSettings);
-  
-      // Find the Settings menu item and add event listener
-      const menuItems = document.querySelectorAll('.sidebar ul li');
-      menuItems.forEach(item => {
-        if (item.textContent === 'Setelan') {
-          item.addEventListener('click', showSettings);
-        }
-        if (item.textContent === 'Metode Pembayaran') {
-          item.addEventListener('click', showPaymentMethods);
-        }
-      });
-  
-      // Initial display - show portfolio by default
-      window.addEventListener('load', function() {
-        // Make sure portfolio section is visible on load
-        portfolioSection.style.display = 'flex';
-        
-        // Trigger animations immediately after a short delay
-        setTimeout(() => {
-          portfolioInfo.classList.add('active');
-          
-          setTimeout(() => {
-            portfolioPhoto.classList.add('active');
-          }, 300);
-        }, 300);
-      });
+<script>
+/* =================================================
+   PRODUCTS DATA
+   ---
+   Cara tambah produk baru:
+   Salin satu blok { ... , } di bawah ini, lalu isi:
+     images  : array path gambar, misal ['nama-file.jpg']
+     name    : nama produk
+     desc    : deskripsi singkat
+     price   : harga angka (untuk sorting)
+     priceStr: harga tampil (string bebas)
+     oldPrice: harga coret, atau '' jika tidak ada
+     tags    : pilih dari 'bestseller','flash','special'
+               (boleh lebih dari satu, atau kosong [])
+   ================================================= */
+const products = [
+  {
+    images: ['product13.jpeg','Robot1.jpeg','Robot2.jpeg'],
+    name: 'Jasa Membuat Robot',
+    desc: 'Pembuatan robot sesuai kebutuhan, dari robot sederhana hingga robotika canggih.',
+    price: 250000,
+    priceStr: 'Rp. 250.000 - Rp. ??? (tergantung kesulitan)',
+    oldPrice: 'Rp. 500.000',
+    tags: ['bestseller'],
+  },
+  {
+    images: ['product14.jpeg'],
+    name: 'Jasa Koding Embedded IoT',
+    desc: 'Koding sistem embedded dan IoT (Arduino, ESP, Raspberry Pi, dan lainnya).',
+    price: 75000,
+    priceStr: 'Rp. 50.000 - Rp. ??? (tergantung kesulitan)',
+    oldPrice: 'Rp. 150.000',
+    tags: ['bestseller'],
+  },
+  {
+    images: ['product3v2.jpg','product3g2.jpeg','product3g3.jpeg','product3g4.jpeg','product3g5.jpeg'],
+    name: 'Jasa Gambar Anime Digital',
+    desc: 'Gambar anime digital full color berkualitas tinggi.',
+    price: 100000,
+    priceStr: 'Rp. 100.000',
+    oldPrice: 'Rp. 400.000',
+    tags: ['flash','special','bestseller'],
+  },
+  {
+    images: ['Chibi.jpeg'],
+    name: 'Jasa Gambar Anime Digital ( Chibi)',
+    desc: 'Gambar anime digital ( Chibi ) full color berkualitas tinggi.',
+    price: 10000,
+    priceStr: 'Rp. 10.000',
+    oldPrice: 'Rp. 40.000',
+    tags: ['flash','special','bestseller'],
+  },
+  {
+    images: ['solder.jpeg','solder2.jpeg'],
+    name: 'Jasa Solder',
+    desc: 'Penyolderan komponen dan PCB.',
+    price: 5000,
+    priceStr: 'Rp. 5.000 - Rp. ??? (tergantung kesulitan)',
+    oldPrice: 'Rp. 20.000',
+    tags: ['special'],
+  },
+  {
+    images: ['PCB1.png','PCB2.png','PCB3.jpeg'],
+    name: 'Jasa Pembuatan PCB',
+    desc: 'Pembuatan sirkuit PCB dan Komponen',
+    price: 50000,
+    priceStr: 'Rp. 50.000 - Rp. ??? (tergantung kesulitan)',
+    oldPrice: 'Rp. 200.000',
+    tags: ['special'],
+  },
+  {
+    images: ['EC1.png','EC2.png','EC3.png'],
+    name: 'Jasa Pembuatan Sirkuit Kelistrikan',
+    desc: 'Pembuatan sirkuit kelistrikan untuk berbagai kebutuhan, seperti sistem robotika, sistem otomasi, dan lainnya.',
+    price: 15000,
+    priceStr: 'Rp. 15.000 - Rp. ??? (tergantung kesulitan)',
+    oldPrice: 'Rp. 25.000',
+    tags: ['special'],
+  },
+  {
+    images: ['product11.png'],
+    name: 'Jasa Membuat Website',
+    desc: 'Pembuatan website profesional sesuai kebutuhan Anda.',
+    price: 65000,
+    priceStr: 'Rp. 65.000 - Rp. ??? (tergantung kesulitan)',
+    oldPrice: 'Rp. 100.000',
+    tags: ['special'],
+  },
+  {
+    images: ['product15.jpeg'],
+    name: 'Sensor Anti Maling',
+    desc: 'Sebuah sensor yang bisa mencegah barang kesayangan kamu hilang!',
+    price: 300000,
+    priceStr: 'Rp. 300.000',
+    oldPrice: 'Rp. 335.000',
+    tags: ['flash', 'special'],
+  },
+  {
+    images: ['product4.jpg'],
+    name: 'Jasa Renderan 16:9 (Full Body)',
+    desc: 'Render karakter full body dengan rasio 16:9. +Rp.5000 per karakter tambahan.',
+    price: 45000,
+    priceStr: 'Rp. 45.000',
+    oldPrice: 'Rp. 90.000',
+    tags: [],
+  },
+  {
+    images: ['project5.jpg'],
+    name: 'Jasa Renderan 1:1 (Full Body)',
+    desc: 'Render karakter full body dengan rasio 1:1. +Rp.5000 per karakter tambahan.',
+    price: 32000,
+    priceStr: 'Rp. 32.000',
+    oldPrice: 'Rp. 70.000',
+    tags: [],
+  },
+  {
+    images: ['product7.png'],
+    name: 'Jasa Renderan 1:1 (Half Body)',
+    desc: 'Render karakter half body dengan rasio 1:1. +Rp.3000 per karakter tambahan.',
+    price: 25000,
+    priceStr: 'Rp. 25.000',
+    oldPrice: 'Rp. 50.000',
+    tags: [],
+  },
+  {
+    images: ['product8.png','product9.png'],
+    name: 'Jasa Membuat Animasi (Mineimator)',
+    desc: 'Pembuatan animasi menggunakan software Mineimator.',
+    price: 8000,
+    priceStr: 'Rp. 8.000 per detik',
+    oldPrice: 'Rp. 16.000 per detik',
+    tags: [],
+  },
+  {
+    images: ['product10.png'],
+    name: 'Jasa Pembuatan RIG / Model 3D',
+    desc: 'Pembuatan RIG atau model 3D sesuai kebutuhan.',
+    price: 50000,
+    priceStr: 'Rp. 50.000 - Rp. ??? (tergantung kesulitan)',
+    oldPrice: 'Rp. 250.000 ',
+    tags: ['special'],
+  },
+  {
+    images: ['kerajinan.jpeg'],
+    name: 'Jasa Kerajinan Tangan',
+    desc: 'Pembuatan kerajinan kain flanel dan kerajinan tangan lainnya.',
+    price: 12000,
+    priceStr: 'Rp. 12.000 - Rp. ??? (tergantung kesulitan)',
+    oldPrice: 'Rp. 25.000',
+    tags: [],
+  },
+];
+
+/* ================================================= */
+
+const T = {
+  id: {
+    search:'Cari Produk...', portfolio:'Portfolio', shop:'Shop',
+    chatBtn:'Chat dengan penjual', filterTitle:'Katalog / Filter',
+    fAll:'Semua Produk', fCheapest:'Harga Termurah', fExpensive:'Harga Tertinggi',
+    fFlash:'Flash Sale (Diskon Terbesar)', fBest:'Produk Terlaris', fSpecial:'Produk Spesial',
+    menuTitle:'Menu', navProducts:'Produk', navPayment:'Metode Pembayaran',
+    langSec:'Bahasa / Language', payTitle:'Metode Pembayaran',
+    paySub:'Anda bisa membayar menggunakan metode-metode pembayaran berikut ini:',
+    order:'Pesan sekarang!', notFound:'Produk tidak ditemukan 😕', shopTitle:'Shop',
+  },
+  en: {
+    search:'Search Products...', portfolio:'Portfolio', shop:'Shop',
+    chatBtn:'Chat with seller', filterTitle:'Catalog / Filter',
+    fAll:'All Products', fCheapest:'Lowest Price', fExpensive:'Highest Price',
+    fFlash:'Flash Sale (Biggest Discount)', fBest:'Best Sellers', fSpecial:'Special Products',
+    menuTitle:'Menu', navProducts:'Products', navPayment:'Payment Methods',
+    langSec:'Language / Bahasa', payTitle:'Payment Methods',
+    paySub:'You can pay using the following payment methods:',
+    order:'Order now!', notFound:'Product not found 😕', shopTitle:'Shop',
+  },
+};
+
+let lang = 'id';
+let currentFilter = 'all';
+let currentSearch = '';
+let modalIdx = 0;
+let modalImgIdx = 0;
+
+// ---- SECTION NAV ----
+function showSection(name) {
+  ['portfolio-section','shop-section'].forEach(id => {
+    document.getElementById(id).classList.remove('active');
+  });
+  ['nav-portfolio','nav-shop'].forEach(id => {
+    document.getElementById(id).classList.remove('active');
+  });
+  if (name === 'portfolio') {
+    document.getElementById('portfolio-section').classList.add('active');
+    document.getElementById('nav-portfolio').classList.add('active');
+  } else {
+    document.getElementById('shop-section').classList.add('active');
+    document.getElementById('nav-shop').classList.add('active');
+    renderProducts();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+// ---- PRODUCTS ----
+function getList() {
+  let list = [...products];
+  const s = currentSearch.toLowerCase().trim();
+  if (currentFilter === 'cheapest') list.sort((a,b) => a.price - b.price);
+  else if (currentFilter === 'expensive') list.sort((a,b) => b.price - a.price);
+  else if (currentFilter === 'flash') {
+    list = list.filter(p => p.tags.includes('flash'));
+    list.sort((a,b) => {
+      const da = a.oldPrice ? (pNum(a.oldPrice) - a.price) : 0;
+      const db = b.oldPrice ? (pNum(b.oldPrice) - b.price) : 0;
+      return db - da;
     });
-  </script>
+  } else if (currentFilter === 'bestseller') list = list.filter(p => p.tags.includes('bestseller'));
+  else if (currentFilter === 'special') list = list.filter(p => p.tags.includes('special'));
+  if (s) list = list.filter(p => p.name.toLowerCase().includes(s) || p.desc.toLowerCase().includes(s));
+  return list;
+}
+
+function pNum(str) { return parseInt((str||'').replace(/\D/g,'')) || 0; }
+
+function disc(p) {
+  if (!p.oldPrice) return 0;
+  const o = pNum(p.oldPrice);
+  return o ? Math.round(((o - p.price)/o)*100) : 0;
+}
+
+function renderProducts() {
+  const grid = document.getElementById('products-grid');
+  const noRes = document.getElementById('no-results');
+  const t = T[lang];
+  const list = getList();
+  grid.innerHTML = '';
+  if (!list.length) { noRes.textContent = t.notFound; noRes.style.display = 'block'; return; }
+  noRes.style.display = 'none';
+
+  list.forEach((product, i) => {
+    const globalIdx = products.indexOf(product);
+    const d = disc(product);
+    let badges = '';
+    if (product.tags.includes('bestseller')) badges += `<span class="badge badge-hot">🔥 Terlaris</span>`;
+    if (d > 0) badges += `<span class="badge badge-sale">-${d}%</span>`;
+    if (product.tags.includes('special')) badges += `<span class="badge badge-special">⭐ Spesial</span>`;
+
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.style.animationDelay = (i * 0.045) + 's';
+    card.innerHTML = `
+      <div class="product-img-wrap">
+        <img src="${product.images[0]}" alt="${product.name}"
+          onerror="this.src='https://via.placeholder.com/300x200/1a1a1a/555?text=No+Image'">
+      </div>
+      <div class="product-info">
+        <h3>${product.name}</h3>
+        <p class="desc">${product.desc}</p>
+        <div class="price-row">
+          <span class="price-now">${product.priceStr}</span>
+          ${product.oldPrice ? `<span class="price-old">${product.oldPrice}</span>` : ''}
+        </div>
+        ${badges ? `<div class="badges">${badges}</div>` : ''}
+      </div>`;
+    card.addEventListener('click', () => openModal(globalIdx));
+    grid.appendChild(card);
+  });
+}
+
+// ---- SEARCH ----
+function handleSearch() {
+  currentSearch = document.getElementById('search-input').value;
+  if (!document.getElementById('shop-section').classList.contains('active')) showSection('shop');
+  else renderProducts();
+}
+
+// ---- FILTER ----
+function applyFilter(f) {
+  currentFilter = f;
+  showSection('shop');
+}
+
+// ---- PRODUCT MODAL ----
+function openModal(idx) {
+  modalIdx = idx; modalImgIdx = 0;
+  refreshModal();
+  document.getElementById('product-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function refreshModal() {
+  const p = products[modalIdx];
+  const imgs = p.images;
+  const imgEl = document.getElementById('modal-img');
+  imgEl.src = imgs[modalImgIdx] || '';
+  imgEl.onerror = () => { imgEl.src = 'https://via.placeholder.com/300x300/1a1a1a/555?text=No+Image'; };
+  document.getElementById('modal-name').textContent = p.name;
+  document.getElementById('modal-desc').textContent = p.desc;
+  document.getElementById('modal-price').textContent = p.priceStr;
+  document.getElementById('modal-old').textContent = p.oldPrice || '';
+  const waEl = document.getElementById('modal-wa');
+  waEl.href = `https://wa.me/+6289510809179?text=Halo%20Zmc%2C%20saya%20ingin%20memesan%20${encodeURIComponent(p.name)}`;
+  waEl.innerHTML = `<img src="WA.png" alt="" onerror="this.style.display='none'" style="width:20px;height:20px"> ${T[lang].order}`;
+  // dots
+  const dots = document.getElementById('modal-dots');
+  dots.innerHTML = '';
+  if (imgs.length > 1) {
+    imgs.forEach((_,i) => {
+      const d = document.createElement('div');
+      d.className = 'modal-dot' + (i === modalImgIdx ? ' active' : '');
+      d.onclick = () => { modalImgIdx = i; refreshModal(); };
+      dots.appendChild(d);
+    });
+  }
+}
+function imgNext() { const l = products[modalIdx].images.length; modalImgIdx = (modalImgIdx+1)%l; refreshModal(); }
+function imgPrev() { const l = products[modalIdx].images.length; modalImgIdx = (modalImgIdx-1+l)%l; refreshModal(); }
+function closeModal() { document.getElementById('product-modal').classList.remove('open'); document.body.style.overflow=''; }
+function bgCloseModal(e) { if (e.target === document.getElementById('product-modal')) closeModal(); }
+
+// ---- MENU POPUP ----
+function openMenuPopup() {
+  document.getElementById('menu-overlay').classList.add('open');
+  document.getElementById('menu-popup').classList.add('open');
+}
+function closeMenuPopup() {
+  document.getElementById('menu-overlay').classList.remove('open');
+  document.getElementById('menu-popup').classList.remove('open');
+}
+
+// ---- FILTER POPUP ----
+function openFilterPopup() {
+  document.getElementById('filter-overlay').classList.add('open');
+  document.getElementById('filter-popup').classList.add('open');
+}
+function closeFilterPopup() {
+  document.getElementById('filter-overlay').classList.remove('open');
+  document.getElementById('filter-popup').classList.remove('open');
+}
+
+// ---- PAYMENT MODAL ----
+function openPayModal() {
+  document.getElementById('pay-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePayModal() {
+  document.getElementById('pay-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function bgClosePayModal(e) { if (e.target === document.getElementById('pay-overlay')) closePayModal(); }
+
+// ---- LANGUAGE ----
+function setLang(l) {
+  lang = l;
+  document.getElementById('lang-id').classList.toggle('selected', l==='id');
+  document.getElementById('lang-en').classList.toggle('selected', l==='en');
+  const t = T[l];
+  document.getElementById('search-input').placeholder = t.search;
+  document.getElementById('nav-portfolio').textContent = t.portfolio;
+  document.getElementById('nav-shop').textContent = t.shop;
+  const waSpan = document.querySelector('.wa-btn span');
+  if (waSpan) waSpan.textContent = t.chatBtn;
+  document.getElementById('filter-popup-title').textContent = t.filterTitle;
+  document.getElementById('f-all').textContent = t.fAll;
+  document.getElementById('f-cheapest').textContent = t.fCheapest;
+  document.getElementById('f-expensive').textContent = t.fExpensive;
+  document.getElementById('f-flash').textContent = t.fFlash;
+  document.getElementById('f-bestseller').textContent = t.fBest;
+  document.getElementById('f-special').textContent = t.fSpecial;
+  document.getElementById('menu-popup-title').textContent = t.menuTitle;
+  document.getElementById('menu-opt-products').textContent = t.navProducts;
+  document.getElementById('menu-opt-payment').textContent = t.navPayment;
+  document.getElementById('menu-sec-lang').textContent = t.langSec;
+  document.getElementById('pay-title').textContent = t.payTitle;
+  document.getElementById('pay-sub').textContent = t.paySub;
+  document.getElementById('shop-title-el').textContent = t.shopTitle;
+  if (document.getElementById('shop-section').classList.contains('active')) renderProducts();
+}
+
+// ---- KEYBOARD ----
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeModal(); closeMenuPopup(); closeFilterPopup(); closePayModal();
+  }
+  if (document.getElementById('product-modal').classList.contains('open')) {
+    if (e.key === 'ArrowRight') imgNext();
+    if (e.key === 'ArrowLeft') imgPrev();
+  }
+});
+
+// ---- INIT ----
+window.addEventListener('load', () => { renderProducts(); });
+</script>
+</body>
+</html>
